@@ -3,7 +3,7 @@ title: "RustでJSONから値をゆるりと取り出すマクロを書いた話"
 emoji: "🦀"
 type: "tech"
 topics: ["rust", "json", "macro"]
-published: false
+published: true
 ---
 # まえがき
 
