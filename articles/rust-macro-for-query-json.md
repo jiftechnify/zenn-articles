@@ -54,6 +54,27 @@ RustでJSONなどの構造つきデータを扱う際の定番クレートであ
         .and_then(|v| v.get(1))
         .and_then(|v| v.get(2));
     ```
+
+    :::details ?演算子を使って短縮する方法
+    `and_then()`を連鎖させるかわりに、`?`演算子とクロージャの即時実行を組み合わせることで、同等の処理をより短く書けます。
+    ただ、ある程度Rustに慣れていないと意味が取りづらいかもしれません。
+
+    ```rust
+    // j: serde_json::Value
+    let deep = (|| {
+        Some(
+            j.get("foo")?
+                .get("bar")?
+                .get("buz")?
+                .get(1)?
+                .get(2)?
+        )
+    })();
+    ```
+
+    (情報提供: [higumachan氏](https://zenn.dev/higumachan) ありがとうございます🙇)
+    :::
+
 - `Index`トレイトを実装しているので、角括弧記法が使えます。こちらだとコードは長くなりませんが、[指定したフィールドが存在しない場合は`Value::Null`(JSONの`null`に対応するもの)を返す](https://docs.serde.rs/serde_json/value/enum.Value.html#impl-Index%3CI%3E)という仕様のため、「フィールドが存在しない場合」と「値が`null`のフィールドが存在する場合」を区別しなければならない状況では使えません[^3]。フィールド名と配列のインデックスの両方が`[]`になるのも個人的にはマイナスポイントです。
 
     ```rust
