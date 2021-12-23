@@ -11,7 +11,7 @@ published: true
 
 https://github.com/jiftechnify/valq
 
-このクレートが提供する `query_value`マクロを使うと、`serde_json::Value`のような入れ子構造を持つ値から、特定の場所にあるデータを取り出すRustのコードを、まるで**JavaScriptを書いているかのように**簡潔に書けます。
+このクレートが提供する `query_value!`マクロを使うと、`serde_json::Value`のような入れ子構造を持つ値から、特定の場所にあるデータを取り出すRustのコードを、まるで**JavaScriptを書いているかのように**簡潔に書けます。
 
 ![](/images/rust-macro-for-query-json/valq.png)
 
@@ -358,7 +358,7 @@ loop {
 
 実は、この問題は**マクロの再帰呼び出し**によって綺麗に解決できます[^8]。 
 
-具体的な実装は次のようになります。なお、クエリの1段めと2段め以降では処理が少々異なるので、ここでは2段め以降の処理を別のマクロ`query_nested_value`に切り出しています[^9]。
+具体的な実装は次のようになります。なお、クエリの1段めと2段め以降では処理が少々異なるので、ここでは2段め以降の処理を別のマクロ`query_nested_value!`に切り出しています[^9]。
 
 ```rust
 macro_rules! query_nested_value {
@@ -399,7 +399,7 @@ macro_rules! query_value {
 
 fn main() {
     trace_macros!(true);
-    let a = query_values!(j.foo.bar.baz);
+    let a = query_value!(j.foo.bar.baz);
     trace_macros!(false);
 }
 ```
@@ -429,19 +429,19 @@ macro_rules! query_value {
 }
 ```
 
-これで外部クレートからは`query_value`だけが見える状態になりました。それでは実際に外部から`query_value`マクロを呼び出してみましょう。すると、以下のコンパイルエラーが発生します。
+これで外部クレートからは`query_value!`だけが見える状態になりました。それでは実際に外部から`query_value!`マクロを呼び出してみましょう。すると、以下のコンパイルエラーが発生します。
 
 ```
 error: cannot find macro `query_nested_value` in this scope
 ```
 
-これは、`query_value`の中で`query_nested_value`を呼びそうとしたものの、それを`use`でインポートしていないために見つけられなかったということです。
+これは、`query_value!`の中で`query_nested_value!`を呼びそうとしたものの、それを`use`でインポートしていないために見つけられなかったということです。
 
 実は、通常の関数などとは異なり、別のクレートで定義され外部に公開されているマクロを正しく呼び出すには**そのマクロが内部で呼び出すすべてのマクロをインポートしなければなりません。** しかし、`#[macro_export]`によって外部に公開されていないマクロはもちろんインポートできません。よって、**あるマクロを外部に公開する場合、そのマクロが内部で呼び出すヘルパーマクロもすべて公開しなければならない**ことになるのです。
 
 ヘルパーマクロはそもそも外部から直接利用することを想定しないものですし、数が多いと利用側の名前空間を汚染することになるので、できればすべてを公開するのは避けたいところです。
 
-現状、この問題に対処するには**すべてを1つのマクロ定義にまとめる**しかないようです。このときに使えるのが、マッチパターンと再帰呼び出しの工夫によって、「内部マクロ」をエミュレートする実装パターンです。ヘルパーマクロを利用していた`query_value`の実装を1つのマクロにまとめると次のようになります。この実装パターンは[こちら](http://danielkeep.github.io/tlborm/book/pat-internal-rules.html)を参考にしています。
+現状、この問題に対処するには**すべてを1つのマクロ定義にまとめる**しかないようです。このときに使えるのが、マッチパターンと再帰呼び出しの工夫によって、「内部マクロ」をエミュレートする実装パターンです。ヘルパーマクロを利用していた`query_value!`の実装を1つのマクロにまとめると次のようになります。この実装パターンは[こちら](http://danielkeep.github.io/tlborm/book/pat-internal-rules.html)を参考にしています。
 
 ```rust
 macro_rules! query_value {
@@ -471,7 +471,7 @@ macro_rules! query_value {
 https://play.rust-lang.org/?version=stable&mode=debug&edition=2021&gist=a986a677b71c7437819cbafc0dd706f4
 
 # もっと便利に
-ここまでの実装で、「`serde_json::Value`の値から内部の`Value`を取り出す」という基本機能が実現できましたが、実は記事の最初で紹介した拙作[valq](https://github.com/jiftechnify/valq)の`query_value`マクロはさらに便利な機能を備えています。それらについて簡単な方針を提示しますので、自分なりに実装を考えてみてください!
+ここまでの実装で、「`serde_json::Value`の値から内部の`Value`を取り出す」という基本機能が実現できましたが、実は記事の最初で紹介した拙作[valq](https://github.com/jiftechnify/valq)の`query_value!`マクロはさらに便利な機能を備えています。それらについて簡単な方針を提示しますので、自分なりに実装を考えてみてください!
 
 ## `as_xxx()`による特定の型への変換に対応
 `serde_json::Value`はJSONの値がとりうる「文字列、数値、bool値、オブジェクト、配列、`null`」の6種類の可能性を、Rustの`enum`の形で実装したものになっています。さらに、`as_<型名>()`というメソッドが用意されており、レシーバの`Value`が`<型名>`に一致する場合に`Value`に包まれていたその型の値を取得できます。
@@ -524,7 +524,7 @@ j.get_mut("foo")
 また、クエリの先頭が`mut`かつ最後に`-> object`/`array`が指定された場合は、`as_object()`/`array()`ではなく`as_object_mut()`/`array_mut()`に変換したいので、ここでも処理段階の区別が必要です。結局のところ、`mut`がつくパターンとつかないパターンを並べることになるのですが、順序を間違えると上手く動きません。
 
 :::details ヒント
-これは、最終的な`query_value`の処理段階の移り変わりを、状態遷移図としてまとめた図です。
+これは、最終的な`query_value!`の処理段階の移り変わりを、状態遷移図としてまとめた図です。
 赤字で示されているのは遷移の条件になります。状態名はvalqの実装に沿っています。
 ![](/images/rust-macro-for-query-json/state_diagram.png)
 :::
