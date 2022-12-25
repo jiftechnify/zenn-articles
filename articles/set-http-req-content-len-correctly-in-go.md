@@ -139,5 +139,5 @@ GoでHTTPリクエストを行う際に`Content-Length`ヘッダを正しく設�
 - [Sending Content-Length in Go](https://medium.com/ne-digital/sending-content-length-in-go-12a1fcf41251)
 
 :::message
-この記事は [Go Advent Calendar 2022](https://qiita.com/advent-calendar/2022/go) の11日目の記事(代筆)です。
+この記事は [Go Advent Calendar 2022](https://qiita.com/advent-calendar/2022/go) の11日目の記事です。
 :::
