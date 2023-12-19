@@ -19,6 +19,6 @@
   },
   "homepage": "https://github.com/jiftechnify/zenn-articales#readme",
   "dependencies": {
-    "zenn-cli": "^0.1.100"
+    "zenn-cli": "^0.1.150"
   }
 }
