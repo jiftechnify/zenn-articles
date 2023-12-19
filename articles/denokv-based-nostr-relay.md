@@ -3,11 +3,11 @@ title: "Deno KVは分散型SNS Nostrの夢を見るか?"
 emoji: "🦕"
 type: "tech"
 topics: ["Deno", "nostr", "DB"]
-published: false
+published: true
 ---
 
 :::message
-本稿は [Nostr(1) Advent Calendar 2023](https://adventar.org/calendars/8794) および [Deno Advent Calendar 2023](https://qiita.com/advent-calendar/2023/deno) の18日目の記事です。
+本稿は [Nostr(2) Advent Calendar 2023](https://adventar.org/calendars/8880) および [Deno Advent Calendar 2023](https://qiita.com/advent-calendar/2023/deno) の18日目の記事です。
 :::
 
 ## TL; DR
