@@ -7,7 +7,7 @@ published: true
 ---
 
 :::message
-本稿は [Nostr(2) Advent Calendar 2023](https://adventar.org/calendars/8880) および [Deno Advent Calendar 2023](https://qiita.com/advent-calendar/2023/deno) の18日目の記事です。
+本稿は [Nostr(2) Advent Calendar 2023](https://adventar.org/calendars/8880) および [Deno Advent Calendar 2023](https://qiita.com/advent-calendar/2023/deno) の19日目の記事です。
 :::
 
 ## TL; DR
