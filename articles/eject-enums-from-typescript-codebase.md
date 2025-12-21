@@ -3,7 +3,7 @@ title: "TypeScriptコードから一撃でenumを「追放」するツールを�
 emoji: "⏏️"
 type: "tech" 
 topics: ["TypeScript"]
-published: false
+published: true
 ---
 
 :::message
