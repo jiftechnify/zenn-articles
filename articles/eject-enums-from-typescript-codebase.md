@@ -6,6 +6,10 @@ topics: ["TypeScript"]
 published: false
 ---
 
+:::message
+この記事は、[TypeScript Advent Calendar 2025](https://qiita.com/advent-calendar/2025/typescript) の21日目の記事です。
+:::
+
 ## TL; DR
 
 TypeScriptの`enum`を[等価なオブジェクトリテラル+union型の組](https://www.typescriptlang.org/docs/handbook/enums.html#objects-vs-enums)に一括で書き換えるツール、その名も[`eject-enum`](https://github.com/jiftechnify/eject-enum)を作りました。
