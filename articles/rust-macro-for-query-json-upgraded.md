@@ -45,7 +45,7 @@ Rustで半構造化データから値を抽出したい場合、[serde](https://
             "profile": {
                 "age": 31,
                 "occupation": "SWE",
-                "hobbies": ["rhythm games", "podcasts", "walking"],
+                "hobbies": ["rhythm games", "podcasts", "walking"]
             },
         },
         "other": { ... }
@@ -299,7 +299,7 @@ let hobbies: Vec<String> =
 
 `Option<T>`の代わりに`Result<T, valq::Error>`を返す`query_value!`の亜種、[**`query_value_result!`マクロ**](https://docs.rs/valq/latest/valq/macro.query_value_result.html)を新たに追加しました。
 
-[`valq::Error`](docs.rs/valq/latest/valq/enum.Error.html)は、クエリが失敗した理由を表現するエラー型で、主要なクエリの失敗理由に対応するvariantを持ちます。クエリが失敗した原因の究明に役立つペイロードも含まれています。
+[`valq::Error`](https://docs.rs/valq/latest/valq/enum.Error.html)は、クエリが失敗した理由を表現するエラー型で、主要なクエリの失敗理由に対応するvariantを持ちます。クエリが失敗した原因の究明に役立つペイロードも含まれています。
 
 | variant               | クエリ失敗理由                                              | ペイロード |
 | --------------------- | ----------------------------------------------------------- | ---------- |
@@ -317,7 +317,7 @@ let occupation: valq::Result<&str> =
     query_value_result!(v.data.user.occupation -> str);
 assert_eq!(
     occupation,
-    Err(valq::Error::ValueNotFoundAtPath("data.user.profile".to_string())
+    Err(valq::Error::ValueNotFoundAtPath("data.user.occupation".to_string())
 ));
 
 // キャスト失敗の例(数値なのに文字列にキャストしようとしている)
