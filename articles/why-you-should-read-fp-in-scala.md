@@ -3,8 +3,12 @@ title: "『FP in Scala』読書のすゝめ ― 関数型プログラミング�
 emoji: "📕"
 type: "idea"
 topics: ["関数型プログラミング", "Scala", "書籍紹介"]
-published: false
+published: true
 ---
+
+:::message
+この記事は、[Scala Advent Calendar 2025](https://qiita.com/advent-calendar/2025/scala) の25日目の記事です。
+:::
 
 ## はじめに
 
