@@ -3,7 +3,7 @@ title: "『FP in Scala』読書のすゝめ ― 関数型プログラミング�
 emoji: "📕"
 type: "idea"
 topics: ["関数型プログラミング", "Scala", "書籍紹介"]
-published: false
+published: true
 ---
 
 :::message
